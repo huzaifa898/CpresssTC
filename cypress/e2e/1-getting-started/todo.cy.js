@@ -83,3 +83,27 @@ describe('Navbar Styling', () => {
     cy.get('.navbar').should('have.css', 'background-color', 'rgb(0, 0, 0)');
   });
 });
+
+
+// cypress/integration/books_spec.js
+
+describe('Books Section', () => {
+  beforeEach(() => {
+    cy.intercept('GET', 'http://localhost:1000/api/v1//getBooks', { fixture: 'books.json' }).as('getBooks');
+    cy.visit('/books');
+    cy.wait('@getBooks');
+  });
+
+  it('should display books when data is loaded', () => {
+    // Assuming BooksSection renders individual book elements with a specific class or selector
+    cy.get('.book-item').should('have.length.greaterThan', 0);
+  });
+
+  it('should display "Loading..." when data is not yet loaded', () => {
+    // Modify the component to display "Loading..." conditionally
+    // For example, have a loading state in your component and display it when Data is null
+
+    // Ensure the loading state is displayed
+    cy.get('.text-white').should('contain', 'Loading...');
+  });
+});
