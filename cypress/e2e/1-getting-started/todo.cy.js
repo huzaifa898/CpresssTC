@@ -38,7 +38,7 @@ describe('Navbar', () => {
 });
 
 // cypress/integration/navbar_spec.js
-
+//Test case for navbar
 describe('Navbar Elements', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3001');
@@ -69,7 +69,7 @@ describe('Navbar Elements', () => {
 
 
 // cypress/integration/navbar_spec.js
-
+// test case for navbar navigation
 describe('Navbar Styling', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3001');
@@ -85,8 +85,8 @@ describe('Navbar Styling', () => {
 });
 
 
-// cypress/integration/books_spec.js
-
+//cypress/integration/books_spec.js
+// test case for veiww book section button
 describe('Books Section', () => {
   beforeEach(() => {
     cy.intercept('GET', 'http://localhost:1000/api/v1//getBooks', { fixture: 'books.json' }).as('getBooks');
@@ -95,15 +95,33 @@ describe('Books Section', () => {
   });
 
   it('should display books when data is loaded', () => {
-    // Assuming BooksSection renders individual book elements with a specific class or selector
+
     cy.get('.book-item').should('have.length.greaterThan', 0);
   });
 
   it('should display "Loading..." when data is not yet loaded', () => {
-    // Modify the component to display "Loading..." conditionally
-    // For example, have a loading state in your component and display it when Data is null
-
-    // Ensure the loading state is displayed
+   
     cy.get('.text-white').should('contain', 'Loading...');
+  });
+});
+
+
+// delte button and update button test case
+// cypress/integration/books_spec.js
+
+describe('Books Section', () => {
+  beforeEach(() => {
+    cy.intercept('GET', 'http://localhost:1000/api/v1/getBooks', { fixture: 'books.json' }).as('getBooks');
+    cy.visit('/books');
+    cy.wait('@getBooks');
+  });
+
+  it('should display update and delete buttons for each book', () => {
+    cy.get('.book-item').each(($bookItem) => {
+      cy.wrap($bookItem).within(() => {
+        cy.get('.update-button').should('exist'); 
+        cy.get('.delete-button').should('exist'); 
+      });
+    });
   });
 });
