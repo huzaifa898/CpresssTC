@@ -214,7 +214,7 @@ describe('Books CRUD Operations', () => {
         bookname: 'Updated Book Name',
         description: 'Updated book description',
         author: 'Updated Author',
-        image: 'https://example.com/updated-image.jpg',
+        image: 'https://url',
         price: 29.99,
       });
 
