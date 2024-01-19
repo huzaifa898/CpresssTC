@@ -259,3 +259,26 @@ describe('MongoDB Interactions', () => {
 
   // Add more test cases for other MongoDB interactions (e.g., adding, updating, deleting)
 });
+//api testing
+// cypress/integration/api_test_spec.js
+
+describe('API Tests', () => {
+  it('should successfully retrieve data from the API', () => {
+    // Assuming the API endpoint returns a JSON response with status 200
+    cy.request('GET', 'http://localhost:1000/api/v1')
+      .should((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.have.property('data');
+        // Add more assertions based on the expected structure of your API response
+      });
+  });
+
+  // Add more test cases for other API operations (POST, PUT, DELETE, etc.)
+});
+cy.request({
+  method: 'GET',
+  url: 'http://localhost:1000/api/v1',
+  headers: {
+    Authorization: 'Bearer YOUR_ACCESS_TOKEN',
+  },
+})
