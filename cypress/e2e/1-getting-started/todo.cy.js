@@ -237,3 +237,25 @@ describe('Books CRUD Operations', () => {
     });
   });
 });
+//data base test case
+// cypress/integration/mongo_db_spec.js
+
+describe('MongoDB Interactions', () => {
+  beforeEach(() => {
+    // Mocking the response of your MongoDB API
+    cy.intercept('GET', 'http://localhost:1000/api/v1/getBooks', { fixture: 'books.json' }).as('getBooks');
+  });
+
+  it('should display books from MongoDB', () => {
+    // Visit the page that fetches and displays books
+    cy.visit('/books');
+
+    // Wait for the mocked API response
+    cy.wait('@getBooks');
+
+    // Add assertions to check if books are displayed on the page
+    cy.get('.book-item').should('have.length.greaterThan', 0);
+  });
+
+  // Add more test cases for other MongoDB interactions (e.g., adding, updating, deleting)
+});
