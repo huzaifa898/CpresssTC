@@ -146,3 +146,40 @@ describe('Books Section', () => {
     cy.get('.text-white').should('contain', 'No books available.');
   });
 });
+
+
+//test for form 
+// cypress/integration/add_books_spec.js
+
+describe('Add Books Section', () => {
+  beforeEach(() => {
+    cy.visit('/addBooks');
+  });
+
+  it('should successfully add a book when all required fields are filled', () => {
+    // Fill in the form with valid data
+    cy.get('#bookName').type('Test Book');
+    cy.get('#author').type('John Doe');
+    cy.get('#description').type('A great book for testing');
+    cy.get('#imageUrl').type('https://example.com/book-image.jpg');
+    cy.get('#price').type('19.99');
+
+    // Submit the form
+    cy.get('form').submit();
+    cy.visit('/books');
+    cy.get('.book-item').should('have.length.greaterThan', 0);
+  });
+
+  it('should display an error message if any required field is not filled', () => {
+    cy.get('#bookName').type('Test Book');
+    cy.get('#author').type('John Doe');
+    cy.get('#description').type('A great book for testing');
+    cy.get('#imageUrl').type('https://example.com/book-image.jpg');
+
+    // Submit the form
+    cy.get('form').submit();
+
+    // Ensure that an error message is displayed
+    cy.get('.error-message').should('exist');
+  });
+});
